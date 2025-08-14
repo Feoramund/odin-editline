@@ -3,8 +3,15 @@ package editline
 import "core:c"
 import "core:c/libc"
 
-// editline v1.17.1
-foreign import lib "system:editline"
+LIB_PATH :: #config(EDITLINE_PATH, "")
+
+when LIB_PATH == "" {
+    // editline v1.17.1
+    foreign import lib "system:editline"
+} else {
+    // user-supplied `libeditline.a`
+    foreign import lib { LIB_PATH }
+}
 
 Status :: enum c.int {
 	Done = 0, /* OK */
